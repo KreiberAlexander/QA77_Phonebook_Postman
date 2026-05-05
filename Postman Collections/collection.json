@@ -315,8 +315,12 @@
 									"listen": "prerequest",
 									"script": {
 										"id": "bb7bb4c5-18c0-412f-870d-56fc9c825dfe",
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
