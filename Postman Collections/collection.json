@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "9490b2dd-1d08-480f-b26a-1809cfe16eb0",
+		"name": "phonebook_Kreiber",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Positive",
+					"item": [
+						{
+							"name": "Login registered User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "625892c6-fd70-43fb-8ed2-27be10b7f530",
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.environment.set(\"token\", jsonData.token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b70b2d4f-9226-4ea4-8b31-04b6fd49d7cb",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "08ba8ad5-17ac-406f-bbac-714a86d1d720",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"manuel@gm.com\",\r\n  \"password\": \"Manuel1234$\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/v1/user/login/usernamepassword"
+							},
+							"response": []
+						}
+					],
+					"id": "cf3500df-6e9b-40fc-9855-62d11e3e9f7a",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "321b31fc-a9cd-4c6c-9ec0-1c6f5d43282b",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "03235f2d-22c0-43cc-8f08-24ed2d3dea9e",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Negative",
+					"item": [],
+					"id": "5f33eb10-5d03-4920-8dbc-73225a9b8d33"
+				}
+			],
+			"id": "58da0bd6-2a2c-4340-806b-297388179304"
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "positive",
+					"item": [
+						{
+							"name": "GetAllContacts before add",
+							"id": "948902c7-7471-410f-8bd4-a344bba5a0ec",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseUrl}}/v1/contacts"
+							},
+							"response": []
+						},
+						{
+							"name": "AddContact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85ff9a91-cf11-4774-95c6-40cc1042fd74",
+										"exec": [
+											"pm.test(\"Body matches string:Contact was added!\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Contact was added!\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bac28452-ddf3-400f-81b8-e223be713589",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "de13710c-e604-4092-b4cb-4367ce0a06a6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \r\n  \"name\": \"Alex\",\r\n  \"lastName\": \"Kreiber\",\r\n  \"email\": \"kreiberalexander@gmx.de\",\r\n  \"phone\": \"123456789012345\",\r\n  \"address\": \"Hannover\",\r\n  \"description\": \"QA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/v1/contacts"
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllContacts  after adding",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9bc17dbb-2009-43e6-8836-474c88d59461",
+										"exec": [
+											"//take the first elemrnent from contacts array\r",
+											"let response= pm.response.json();\r",
+											"let contactId = response.contacts[0].id;\r",
+											"//save in enviroment\r",
+											"pm.environment.set(\"id\",contactId);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c618ae8c-258a-4475-b2fc-7e979b7f67a7",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "32781d30-55ce-4adb-962b-3043c7cb07db",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{BaseUrl}}/v1/contacts"
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateContact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85ff9a91-cf11-4774-95c6-40cc1042fd74",
+										"exec": [
+											"pm.test(\"API message:Contact was updated\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Contact was updated\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bac28452-ddf3-400f-81b8-e223be713589",
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "bd075d49-5948-4ffe-b308-2bf77bf272dc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\":\"{{id}}\",\r\n  \"name\": \"Alex\",\r\n  \"lastName\": \"Kreiber\",\r\n  \"email\": \"kreiberalexander@gmx.de\",\r\n  \"phone\": \"123456789012345\",\r\n  \"address\": \"Lahe H\",\r\n  \"description\": \"QA\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BaseUrl}}/v1/contacts"
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteContactById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8e140699-4b77-4d3f-99ee-a105616c3bf4",
+										"exec": [
+											"pm.test(\"Your test name\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.message).to.eql(\"Contact was deleted!\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bb7bb4c5-18c0-412f-870d-56fc9c825dfe",
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "487fdd83-34c7-4264-960f-a6ed723bf661",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \r\n  \"name\": \"Alex\",\r\n  \"lastName\": \"Kreiber\",\r\n  \"email\": \"kreiberalexander@gmx.de\",\r\n  \"phone\": \"123456789012345\",\r\n  \"address\": \"Hannover\",\r\n  \"description\": \"QA\"\r\n}"
+								},
+								"url": "{{BaseUrl}}/v1/contacts/{{id}}"
+							},
+							"response": []
+						}
+					],
+					"id": "2c0df695-f35e-49f7-b083-ddd4a9cd6818",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "373ff9ad-2757-46bf-9da5-dd8fc0b31ab2",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c56f71e9-0cd7-408b-8562-36c42a664a87",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "negative",
+					"item": [],
+					"id": "9ed84d8e-7c56-458f-895c-4c08cf7ec63e"
+				}
+			],
+			"id": "414fea83-fd91-4a5e-8488-a8da028a404b"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "71a32469-49e5-40ba-80ca-c090656ba874",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "626056e5-b1d3-4ac2-889f-53112dae7be8",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					"pm.test(\"Response time is less than 2000ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+					"});"
+				]
+			}
+		}
+	]
+}
